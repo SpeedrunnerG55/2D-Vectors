@@ -29,7 +29,7 @@ void Scalar_Multiplication(Vectors v1, float k);
 void Scalar_Product(Vectors v1, Vectors v2);
 void Vector_Magnitude(Vectors v1);
 Vectors get_Vector(string name1);
-int get_Scalar();
+float get_Scalar();
 void print_Vector(Vectors Vec1);
 
 /* user interface function responsible for all inputs into vector structs. Also prompts user.
@@ -103,7 +103,7 @@ Vectors get_Vector(string name) {
 	return vec1;
 }
 
-int get_Scalar() {
+float get_Scalar() {
 	int scalar;
 	cout << "enter Scalar value" << endl;
 	cin >> scalar;
