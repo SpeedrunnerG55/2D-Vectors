@@ -23,12 +23,26 @@ struct Vectors {
 	double yaxis;
 };
 //container for the vectors. Each struct is one vector
+
+//adds preforms vector addition
 void Vector_Addition(Vectors v1, Vectors v2);
+
+//preforms vector subtraction
 void Vector_Subtraction(Vectors v1, Vectors v2);
+
+//preforms scalar multiplacation
 void Scalar_Multiplication(Vectors v1, float k);
+
+//preforms vector multiplacation
 void Scalar_Product(Vectors v1, Vectors v2);
+
+//retuens the magnitude or length of the vector
 void Vector_Magnitude(Vectors v1);
+
+//gets vector informations
 Vectors get_Vector(string name1);
+
+//gets scalar value
 float get_Scalar();
 void print_Vector(Vectors Vec1);
 
