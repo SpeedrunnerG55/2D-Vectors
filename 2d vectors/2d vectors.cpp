@@ -31,7 +31,7 @@ void Vector_Addition(Vectors v1, Vectors v2);
 void Vector_Subtraction(Vectors v1, Vectors v2);
 
 //preforms scalar multiplacation
-void Scalar_Multiplication(Vectors v1, float k);
+void Scalar_Multiplication(Vectors v1, double k);
 
 //preforms vector multiplacation
 void Scalar_Product(Vectors v1, Vectors v2);
@@ -43,7 +43,9 @@ void Vector_Magnitude(Vectors v1);
 Vectors get_Vector(string name1);
 
 //gets scalar value
-float get_Scalar();
+double get_Scalar();
+
+//prints vector information
 void print_Vector(Vectors Vec1);
 
 /* user interface function responsible for all inputs into vector structs. Also prompts user.
@@ -53,7 +55,7 @@ bool continue; //variable that tells if program is running
 */
 int main()
 {
-	float k = 10;  //variable,used solely as scalar
+	double k = 10;  //variable,used solely as scalar
 	Vectors alpha, beta;
 	char Menu_Select;
 	bool running = true;
@@ -117,8 +119,8 @@ Vectors get_Vector(string name) {
 	return vec1;
 }
 
-float get_Scalar() {
-	int scalar;
+double get_Scalar() {
+	double scalar;
 	cout << "enter Scalar value" << endl;
 	cin >> scalar;
 	return scalar;
@@ -128,49 +130,61 @@ void print_Vector(Vectors Vec1) {
 	cout << setprecision(2) << fixed << setw(20) << left << Vec1.Title << "(" << Vec1.xaxis << "," << Vec1.yaxis << ")" << endl;
 }
 
-void print_Scalar(float k) {
+void print_Scalar(double k) {
 	cout << setprecision(2) << fixed << setw(20) << left << "Scalar:" << k << endl;
 }
 
-void Vector_Addition(Vectors vec1, Vectors vec2) { /*function definition for vector addition. Needs no parameters as output is included within*/
+void Vector_Addition(Vectors vec1, Vectors vec2) {
 	Vectors sum;
 	sum.xaxis = vec1.xaxis + vec2.xaxis;
 	sum.yaxis = vec1.yaxis + vec2.yaxis;
+	//set title for output vector
 	sum.Title = "sum";
+	//input vectors
 	print_Vector(vec1);
 	print_Vector(vec2);
+	//output vector
 	print_Vector(sum);
 }
 
-void Vector_Subtraction(Vectors alpha, Vectors beta) { /*function definition for vector subtraction. Needs no parameters as output is included within*/
+void Vector_Subtraction(Vectors alpha, Vectors beta) { 
 	Vectors diff;
+	//set title for output vector
 	diff.Title = "Difference";
 	diff.xaxis = alpha.xaxis - beta.xaxis;
 	diff.yaxis = alpha.yaxis - beta.yaxis;
+	//input vectors
 	print_Vector(alpha);
 	print_Vector(beta);
+	//output vector
 	print_Vector(diff);
 }
 
-void Scalar_Multiplication(Vectors vec1, float k) {
+void Scalar_Multiplication(Vectors vec1, double k) {
 	Vectors mult;
+	//set title for output vector
 	mult.Title = "Scalar multiple";
 	mult.xaxis = vec1.xaxis*k;
 	mult.yaxis = vec1.yaxis*k;
 	print_Vector(vec1);
 	print_Scalar(k);
+	//output vector
 	print_Vector(mult);
 }
+
 
 void Scalar_Product(Vectors vec1, Vectors vec2) {
 	print_Vector(vec1);
 	print_Vector(vec2);
+	//output scalar
 	cout << "Scalar Product" << endl;
 	print_Scalar(vec1.xaxis*vec2.xaxis + vec1.yaxis*vec2.yaxis);
 }
 
+
 void Vector_Magnitude(Vectors vec1) {
 	print_Vector(vec1);
+	//output scalar
 	cout << "Magnitude" << endl;
 	print_Scalar(sqrt(pow(vec1.xaxis, 2) + pow(vec1.yaxis, 2)));
 }
