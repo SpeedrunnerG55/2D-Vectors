@@ -29,6 +29,7 @@ void Scalar_Multiplication(Vectors v1, float k);
 void Scalar_Product(Vectors v1, Vectors v2);
 void Vector_Magnitude(Vectors v1);
 Vectors get_Vector(string name1);
+int get_Scalar();
 void print_Vector(Vectors Vec1);
 
 /* user interface function responsible for all inputs into vector structs. Also prompts user.
@@ -41,12 +42,6 @@ int main()
 	float k = 10;  //variable,used solely as scalar
 	Vectors alpha, beta;
 	char Menu_Select;
-	alpha.Title  = "name1";
-	alpha.xaxis  = 8;
-	alpha.yaxis  = -3;
-	beta.Title   = "name2";
-	beta.xaxis   = 10;
-	beta.yaxis   = 5;
 	bool running = true;
 	do {
 		cout << "What do you want to do? type:" << endl;
@@ -61,18 +56,27 @@ int main()
 		switch (Menu_Select)
 		{
 			case '1':
+				alpha = get_Vector("First");
+				beta = get_Vector("Second");
 				Vector_Addition(alpha, beta);
 				break;
 			case '2':
+				alpha = get_Vector("First");
+				beta = get_Vector("Second");
 				Vector_Subtraction(alpha, beta);
 				break;
 			case '3':
+				alpha = get_Vector("The");
+				k = get_Scalar();
 				Scalar_Multiplication(alpha, k);
 				break;
 			case '4':
+				alpha = get_Vector("First");
+				beta = get_Vector("Second");
 				Scalar_Product(alpha, beta);
 				break;
 			case '5':
+				alpha = get_Vector("The");
 				Vector_Magnitude(alpha);
 				break;
 			case '9':
@@ -97,6 +101,13 @@ Vectors get_Vector(string name) {
 	cout << "enter " << name << " vectors y axis " << endl;
 	cin >> vec1.yaxis;
 	return vec1;
+}
+
+int get_Scalar() {
+	int scalar;
+	cout << "enter Scalar value" << endl;
+	cin >> scalar;
+	return scalar;
 }
 
 void print_Vector(Vectors Vec1) {
