@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="..\Display Summary.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
