@@ -1,36 +1,37 @@
 
 
-============================================= DISPLAY SUMMARY =============================================
-
-
-
-	RANGE CHECKER															LIMMIT CHECKER
-			
-if the Limmit checker for this cell returns true				each cell will be tested to see if 
-the Range checker will checks the value of the					it is in within the limmits of the vector 
-linear function of the vector for the x and y axis				
-agenst the range values of the cell								  | for the sake of readability 
-																	|	the space around the vector 
-		test y range											      |	is to be auumed false  
-		returns FALSE
-			V                                                        
-/---------------------\                                             |       .				 
-|       ** |          |                                             |       .              F
-|      **  |          |                                             |       .            FF
-|      *   |          |                                             |       .          FF
-|     **   |          |                                             |       .        FF
-|    **    |          |                                             |       .      FF
-|----x-----+----------| < test x range                              |       .    FF
-|   **     |          |	  returns TRUE                              |       .  FF
-|  **      |          |                                             |       .FF 
-|  *       |          |                                             |------TT---------------< Y Uppert
-| **       |          |                                             |    TT |        			Limit  
-|**        |          |                                             |  TT   |  
-\---------------------/                                             \TT_____|_______________  __ < Y Lower
-			                                                Origin > O | 	    ^		           	     Limmit
-	Range checker will return true if                            FF    ^    	X Upper
-	function values are within at least one ranges             FF      X Lower   Limmit
-			                                                            Limit
-If the range checker returns true
-a marker will be plotted on the cell                                will retuen TRUE if within the limmits
-============================================= DISPLAY SUMMARY =============================================
+|=============================================== DISPLAY SUMMARY ===============================================|
+|                                                                                                               |
+|                                                                                                               |
+|                                                                                                               |
+|                                                                                                               |
+|  RANGE CHECKER                                                    LIMMIT CHECKER                              |
+|                                                                                                               |
+|  if the Limmit checker for this cell returns true                  each cell will be tested to see if         |
+|  the Range checker will checks the value of the                    it is in within the limmits of the vector  |
+|  linear function of the vector for the x and y axis                                                           |
+|  agenst the range values of the cell                                | for the sake of readability             |
+|                                                                     |  the space around the vector            |
+|          test y range                                               |  is to be auumed false                  |
+|          returns FALSE                                                                                        |
+|                 V                                                                                             |
+| /-------------------------------\                                   |       .                                 |
+| |       **      |               |                                   |       .              F                  |
+| |      **       |               |                                   |       .            FF                   |
+| |      *        |               |                                   |       .          FF                     |
+| |     **        |               |                                   |       .        FF                       |
+| |    **         |               |                                   |       .      FF                         |
+| |----x----------+---------------| < test x range                    |       .    FF                           |
+| |   **          |               |   returns TRUE                    |       .  FF                             |
+| |  **           |               |                                   |       .FF                               |
+| |  *            |               |                                   |------TT---------------< Y Uppert        |
+| | **            |               |                                   |    TT |              Limit              |
+| |**             |               |                                   |  TT   |                                 |
+| \-------------------------------/                                   \TT_____|_______________  __ < Y Lower    |
+|                                                          Origin > O |       ^                      Limmit     |
+|  Range checker will return true if                            FF    ^      X Upper                            |
+|  function values are within at least one ran                FF    X Lower   Limit                             |
+|                                                                     Limit                                     |
+| If the range checker returns true                                                                             |
+| a marker will be plotted on the cell                                will return TRUE if within the limits     |
+|=============================================== DISPLAY SUMMARY ===============================================|
