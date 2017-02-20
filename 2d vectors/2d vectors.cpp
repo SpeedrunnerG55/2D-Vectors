@@ -22,6 +22,7 @@ struct Vectors {
 	double xaxis;
 	double yaxis;
 };
+//stores the bounds of the vecotr
 struct bounds {
 	double yHigh = 0;
 	double yLow = 0;
@@ -54,13 +55,18 @@ double get_Scalar();
 void print_Vector(Vectors Vec1);
 
 //get x and y limmits of vector
-bounds getBounds(Vectors V);
+bounds get_Bounds(Vectors V);
 
 //finds gighest value and returns it
-double getTop(double a, double b, double c);
+double get_Top(double a, double b, double c);
 
 //graphical display
-void displayVectorOperation(Vectors Vec1, Vectors Vec2, Vectors Vec3);
+void displayVectorOperation(Vectors v1);
+void displayVectorOperation(Vectors v1, Vectors v2);
+void displayVectorOperation(Vectors v1, Vectors v2, Vectors v3);
+void displayVectorOperation(Vectors v1, Vectors v2, Vectors v3, Vectors v4);
+template<int arrayLength>
+void displayVectorOperation(Vectors(&Vecs)[arrayLength]);
 
 //inline functions that make GIANT conditionals easier to read.
 inline bool limitChecker(int x, double xHigh, double xLow, int y, double yHigh, double yLow);
@@ -74,7 +80,7 @@ bool continue; //variable that tells if program is running
 int main()
 {
 	double k = 10;  //variable,used solely as scalar
-	Vectors alpha, beta, test;
+	Vectors Alpha, Beta, Delta, Gamma;
 	char Menu_Select;
 	bool running = true;
 	do {
@@ -90,43 +96,47 @@ int main()
 		switch (Menu_Select)
 		{
 			case '1':
-				alpha = get_Vector("First");
-				beta = get_Vector("Second");
-				Vector_Addition(alpha, beta);
+				Alpha = get_Vector("First");
+				Beta = get_Vector("Second");
+				Vector_Addition(Alpha, Beta);
 				break;
 			case '2':
-				alpha = get_Vector("First");
-				beta = get_Vector("Second");
-				Vector_Subtraction(alpha, beta);
+				Alpha = get_Vector("First");
+				Beta = get_Vector("Second");
+				Vector_Subtraction(Alpha, Beta);
 				break;
 			case '3':
-				alpha = get_Vector("The");
+				Alpha = get_Vector("The");
 				k = get_Scalar();
-				Scalar_Multiplication(alpha, k);
+				Scalar_Multiplication(Alpha, k);
 				break;
 			case '4':
-				alpha = get_Vector("First");
-				beta = get_Vector("Second");
-				Scalar_Product(alpha, beta);
+				Alpha = get_Vector("First");
+				Beta = get_Vector("Second");
+				Scalar_Product(Alpha, Beta);
 				break;
 			case '5':
-				alpha = get_Vector("The");
-				Vector_Magnitude(alpha);
+				Alpha = get_Vector("The");
+				Vector_Magnitude(Alpha);
 				break;
 			case 'T':
-				alpha.Title = "Alpha";
-				beta.Title = "Beta";
-				test.Title = "Test";
-				alpha.xaxis = rand() % 30 - 15;
-				alpha.yaxis = rand() % 30 - 15;
-				beta.xaxis = rand() % 30 - 15;
-				beta.yaxis = rand() % 30 - 15;
-				test.xaxis = rand() % 30 - 15;
-				test.yaxis = rand() % 30 - 15;
-				print_Vector(alpha);
-				print_Vector(beta);
-				print_Vector(test);
-				displayVectorOperation(alpha, beta, test);
+				Alpha.Title = "Alpha";
+				Beta.Title = "Beta";
+				Delta.Title = "Delta";
+				Gamma.Title = "Gamma";
+				Alpha.xaxis = rand() % 40 - 20;
+				Alpha.yaxis = rand() % 40 - 20;
+				Beta.xaxis = rand() % 40 - 20;
+				Beta.yaxis = rand() % 40 - 20;
+				Delta.xaxis = rand() % 40 - 20;
+				Delta.yaxis = rand() % 40 - 20;
+				Gamma.xaxis = rand() % 40 - 20;
+				Gamma.yaxis = rand() % 40 - 20;
+				print_Vector(Alpha);
+				print_Vector(Beta);
+				print_Vector(Delta);
+				print_Vector(Gamma);
+				displayVectorOperation(Alpha, Beta, Delta, Gamma);
 				break;
 			case '9':
 				running = false;
@@ -152,7 +162,7 @@ Vectors get_Vector(string name) {
 	return V;
 }
 
-bounds getBounds(Vectors V) {
+bounds get_Bounds(Vectors V) {
 	bounds B;
 	//GET X AXIS LIMMITS
 	if (V.xaxis < 0) {
@@ -186,24 +196,6 @@ bounds getBounds(Vectors V) {
 	return B;
 }
 
-double getTop(double a, double b, double c) {
-
-	//defaults to 0 only returns this value if all three vectors have 0 length
-	double top = 0;
-
-	//checks the absolute value because values because arguments will be positive or negitive
-	if (abs(a) > top) {
-		top = abs(a);
-	}
-	if (abs(b) > top) {
-		top = abs(b);
-	}
-	if (abs(c) > top) {
-		top = abs(c);
-	}
-	return top;
-}
-
 //inline functions that make GIANT conditionals easier to read.
 inline bool limitChecker(int x, int y, bounds B) {
 	return (x <= B.xHigh && x >= B.xLow && y <= B.yHigh && y >= B.yLow);
@@ -213,48 +205,90 @@ inline bool cellChecker(float weight, double yValue, int y, double xValue, int x
 	return (yValue > y - weight && yValue < y + weight || xValue > x - weight && xValue < x + weight);
 }
 
+void displayVectorOperation(Vectors v1)
+{
+	Vectors vecs[1] = { v1 };
+	displayVectorOperation(vecs);
+}
+
+void displayVectorOperation(Vectors v1, Vectors v2)
+{
+	Vectors vecs[2] = { v1, v2 };
+	displayVectorOperation(vecs);
+}
+
+void displayVectorOperation(Vectors v1, Vectors v2, Vectors v3)
+{
+	Vectors vecs[3] = { v1, v2, v3 };
+	displayVectorOperation(vecs);
+}
+
+void displayVectorOperation(Vectors v1, Vectors v2, Vectors v3, Vectors v4)
+{
+	Vectors vecs[4] = { v1, v2, v3, v4 };
+	displayVectorOperation(vecs);
+}
+
 //graphical display
-void displayVectorOperation(Vectors Vec1, Vectors Vec2, Vectors Vec3) {
+template<int arrayLength>
+void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 
-	bounds V1B, V2B, V3B;
+	//Plausibly display something in this case?
+	if (arrayLength == 0) {
+		cout << "Error! Array Length of 0!\n\n";
+		return;
+	}
 
-	//calculates and stores the slope of each vector.
-	double M1 = Vec1.yaxis / Vec1.xaxis, M2 = Vec2.yaxis / Vec2.xaxis, M3 = Vec3.yaxis / Vec3.xaxis;
-	//variables to store the xy value of the vector at the x,y coodinates
-	double yValue1, xValue1, yValue2, xValue2, yValue3, xValue3;
-	//variables that store the lowest and highest limmits of each axis for each vector
-	int highestY, lowestY, highestX, lowestX;
+	//stores the bounds of the vecotr
+	bounds VB[arrayLength];
+
+	//Arrays of storage, sized to the length of Vecs
+	double* M = new double[arrayLength];
+	double* xValue = new double[arrayLength];
+	double* yValue = new double[arrayLength];
+	double* xLow = new double[arrayLength];
+	double* yLow = new double[arrayLength];
+	double* xHigh = new double[arrayLength];
+	double* yHigh = new double[arrayLength];
+		
+	//initial values set to the opposite extremes. To ensure it's accurracy, despite the input.
+	double highestY = -DBL_MAX;
+	double lowestY = DBL_MAX;
+	double highestX = -DBL_MAX;
+	double lowestX = DBL_MAX;
+
 	//line thickness
 	float weight = .6;
 
-	//gets limmits for each vector
-	V1B = getBounds(Vec1);
-	V2B = getBounds(Vec2);
-	V3B = getBounds(Vec3);
+	for (int i = 0; i < arrayLength; i++){
 
-	//find highest and lowest value for each limmit to scale the display to fit them all
-	highestY = round(getTop(V1B.yHigh, V2B.yHigh, V3B.yHigh));
-	lowestY = round(getTop(V1B.yLow, V2B.yLow, V3B.yLow));
-	highestX = round(getTop(V1B.xHigh, V2B.xHigh, V3B.xHigh));
-	lowestX = round(getTop(V1B.xLow, V2B.xLow, V3B.xLow));
+		//calculates and stores the slope of each vector. 
+		M[i] = Vecs[i].yaxis / Vecs[i].xaxis;
 
-	//display from -10 - 10 for both axix to create a square display sorounding the oragin
+		//gets limmits for each vector
+		VB[i] = get_Bounds(Vecs[i]);
+
+		//find highest and lowest value for each limmit to scale the display to fit them all
+		if (VB[i].yHigh > highestY)highestY = VB[i].yHigh;
+		if (VB[i].yLow < lowestY)lowestY = VB[i].yLow;
+		if (VB[i].xHigh > highestX)highestX = VB[i].xHigh;
+		if (VB[i].xLow < lowestX)lowestX = VB[i].xLow;
+	}
+
+	//display from Lowest to highest to fit all lines
+
+	//Top border and corners
 	cout << "##";
-	for (int x = -lowestX - 2; x < highestX + 3; x++) {
+	for (int x = lowestX - 2; x < highestX + 3; x++) {
 		cout << "=";
 	}
 	cout << "##" << endl;
-	for (int y = highestY + 2; y > -lowestY - 3; y--) {
-		cout << "||";
-		for (int x = -lowestX - 2; x < highestX + 3; x++) {
 
-			//gets each vectors x y value for the displays x and y value
-			yValue1 = M1*x;
-			yValue2 = M2*x;
-			yValue3 = M3*x;
-			xValue1 = y / M1;
-			xValue2 = y / M2;
-			xValue3 = y / M3;
+	//inside
+	for (int y = highestY + 2; y > lowestY - 3; y--) {
+		//left border
+		cout << "||";
+		for (int x = lowestX - 2; x < highestX + 3; x++) {			
 
 			/*
 			|=============================================== DISPLAY SUMMARY ===============================================|
@@ -301,53 +335,61 @@ void displayVectorOperation(Vectors Vec1, Vectors Vec2, Vectors Vec3) {
 
 			//if the y value of the linear function is whithin range display its ID (the first character of their title)
 
-			//Vector 1
-
-			//Limit checker
-			else if (limitChecker(x,y,V1B) && cellChecker(weight, yValue1, y, xValue1, x)){
-				//plot marker
-				cout << Vec1.Title[0];
-			}
-
-			//Vector 2
-
-			//Limit checker
-			else if (limitChecker(x,y,V2B) && cellChecker(weight, yValue2, y, xValue2, x)){
-				//plot marker
-				cout << Vec2.Title[0];
-			}
-
-			//Vector 3
-
-			//Limit checker
-			else if (limitChecker(x,y,V3B) && cellChecker(weight, yValue3, y, xValue3, x)){
-				//plot marker
-				cout << Vec3.Title[0];
-			}
-
-			//Display Y axis
-			else if (x == 0) {
-				cout << "|";
-			}
-
-			//Display X axis
-			else if (y == 0) {
-				cout << "-";
-			}
-
-			//displlay nothing
 			else {
-				cout << " ";
-			}
+				//Since checking an array, you have to have a variable outside to determine if something was found
+				bool found = false;
+				for (int i = 0; i < arrayLength && !found; i++)
+				{
+						//Limit checker
+					if (limitChecker(x, y, VB[i])) {
+						//gets each vectors x y value for the displays x and y value
+						yValue[i] = M[i] * x;
+						xValue[i] = y / M[i];
+						if (cellChecker(weight, yValue[i], y, xValue[i], x)){
+							found = true;
+							//plot marker
+							cout << Vecs[i].Title[0];
+						}
+					}
+				}
 
+				//Nothing found? Spread out.
+				if (!found) {
+
+					//Display Y axis
+					if (x == 0) {
+						cout << "|";
+					}
+
+					//Display X axis
+					else if (y == 0) {
+						cout << "-";
+					}
+
+					//displlay nothing
+					else {
+						cout << " ";
+					}
+				}
+			}
 		}
+		//right border
 		cout << "||" << endl;
 	}
+	//Bottom border and corners
 	cout << "##";
-	for (int x = -lowestX - 2; x < highestX + 3; x++) {
+	for (int x = lowestX - 2; x < highestX + 3; x++) {
 		cout << "=";
 	}
 	cout << "##" << endl;
+
+	delete[] M;
+	delete[] xValue;
+	delete[] yValue;
+	delete[] xLow;
+	delete[] yLow;
+	delete[] xHigh;
+	delete[] yHigh;
 }
 
 double get_Scalar() {
@@ -406,7 +448,7 @@ void Scalar_Multiplication(Vectors vec1, double k) {
 	//output vector
 	print_Vector(mult);
 	//overlap the first vecttor because function must take 3 vectors
-	displayVectorOperation(vec1, vec1, mult);
+	displayVectorOperation(vec1, mult);
 }
 
 
@@ -417,7 +459,7 @@ void Scalar_Product(Vectors vec1, Vectors vec2) {
 	//output scalar
 	cout << "Scalar Product" << endl;
 	print_Scalar(vec1.xaxis*vec2.xaxis + vec1.yaxis*vec2.yaxis);
-	displayVectorOperation(vec1, vec1, vec2);
+	displayVectorOperation(vec1, vec2);
 }
 
 
@@ -427,5 +469,5 @@ void Vector_Magnitude(Vectors vec1) {
 	//output scalar
 	cout << "Magnitude" << endl;
 	print_Scalar(sqrt(pow(vec1.xaxis, 2) + pow(vec1.yaxis, 2)));
-	displayVectorOperation(vec1, vec1, vec1);
+	displayVectorOperation(vec1);
 }
