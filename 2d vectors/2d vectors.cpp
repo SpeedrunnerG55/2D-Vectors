@@ -1,4 +1,4 @@
-// 2d vectors.cpp : Defines the entry point for the console application.
+﻿// 2d vectors.cpp : Defines the entry point for the console application.
 //
 
 /*
@@ -260,6 +260,9 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 	//line thickness
 	float weight = .6;
 
+	//grid line spacing
+	int grid = 5;
+
 	for (int i = 0; i < arrayLength; i++){
 
 		//calculates and stores the slope of each vector. 
@@ -365,6 +368,18 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 					else if (y == 0) {
 						cout << "-";
 					}
+					 
+					else if (y % grid == 0 && x % grid == 0) {
+						cout << "+";
+					}
+
+					else if(x % grid == 0){
+						cout << ".";
+					}					
+
+					else if (y % grid == 0) {
+						cout << ".";
+					}
 
 					//displlay nothing
 					else {
@@ -373,8 +388,11 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 				}
 			}
 		}
-		//right border
-		cout << "||" << endl;
+		//right border and Y grid marker
+		cout << "|| "; if (y % grid == 0) cout << y << endl;
+		else{
+			cout << endl;
+		}
 	}
 	//Bottom border and corners
 	cout << "##";
@@ -382,6 +400,19 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 		cout << "=";
 	}
 	cout << "##" << endl;
+	cout << "  ";
+
+	//X grid markers
+	bool afterfirst = false;
+	for (int x = lowestX - 2; x < highestX + 3; x++) {
+		if (x % grid == 0) {
+			afterfirst = true;
+			cout << setw(grid) << x;
+		}
+		if (!afterfirst) cout << " ";
+	}
+
+	cout << endl;
 
 	delete[] M;
 	delete[] xValue;
