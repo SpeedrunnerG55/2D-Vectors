@@ -97,55 +97,55 @@ int main()
 		switch (Menu_Select)
 		{
 			case '1':
-				Alpha = get_Vector("First");
-				Beta = get_Vector("Second");
-				Vector_Addition(Alpha, Beta);
-				break;
+			Alpha = get_Vector("First");
+			Beta = get_Vector("Second");
+			Vector_Addition(Alpha, Beta);
+			break;
 			case '2':
-				Alpha = get_Vector("First");
-				Beta = get_Vector("Second");
-				Vector_Subtraction(Alpha, Beta);
-				break;
+			Alpha = get_Vector("First");
+			Beta = get_Vector("Second");
+			Vector_Subtraction(Alpha, Beta);
+			break;
 			case '3':
-				Alpha = get_Vector("The");
-				k = get_Scalar();
-				Scalar_Multiplication(Alpha, k);
-				break;
+			Alpha = get_Vector("The");
+			k = get_Scalar();
+			Scalar_Multiplication(Alpha, k);
+			break;
 			case '4':
-				Alpha = get_Vector("First");
-				Beta = get_Vector("Second");
-				Scalar_Product(Alpha, Beta);
-				break;
+			Alpha = get_Vector("First");
+			Beta = get_Vector("Second");
+			Scalar_Product(Alpha, Beta);
+			break;
 			case '5':
-				Alpha = get_Vector("The");
-				Vector_Magnitude(Alpha);
-				break;
-				//Hidden test input
+			Alpha = get_Vector("The");
+			Vector_Magnitude(Alpha);
+			break;
+			//Hidden test input
 			case 'T':
-				Alpha.Title = "Alpha";
-				Beta.Title  = "Beta";
-				Delta.Title = "Delta";
-				Gamma.Title = "Gamma";
-				Alpha.xaxis = rand() % test - test / 2;
-				Alpha.yaxis = rand() % test - test / 2;
-				Beta.xaxis  = rand() % test - test / 2;
-				Beta.yaxis  = rand() % test - test / 2;
-				Delta.xaxis = rand() % test - test / 2;
-				Delta.yaxis = rand() % test - test / 2;
-				Gamma.xaxis = rand() % test - test / 2;
-				Gamma.yaxis = rand() % test - test / 2;
-				print_Vector(Alpha);
-				print_Vector(Beta);
-				print_Vector(Delta);
-				print_Vector(Gamma);
-				displayVectorOperation(Alpha, Beta, Delta, Gamma);
-				break;
+			Alpha.Title = "Alpha";
+			Beta.Title  = "Beta";
+			Delta.Title = "Delta";
+			Gamma.Title = "Gamma";
+			Alpha.xaxis = rand() % test - test / 2;
+			Alpha.yaxis = rand() % test - test / 2;
+			Beta.xaxis  = rand() % test - test / 2;
+			Beta.yaxis  = rand() % test - test / 2;
+			Delta.xaxis = rand() % test - test / 2;
+			Delta.yaxis = rand() % test - test / 2;
+			Gamma.xaxis = rand() % test - test / 2;
+			Gamma.yaxis = rand() % test - test / 2;
+			print_Vector(Alpha);
+			print_Vector(Beta);
+			print_Vector(Delta);
+			print_Vector(Gamma);
+			displayVectorOperation(Alpha, Beta, Delta, Gamma);
+			break;
 			case '9':
-				running = false;
-				break;
+			running = false;
+			break;
 			default:
-				cout << "Invalid Input" << endl;
-				break;
+			cout << "Invalid Input" << endl;
+			break;
 		}
 
 	} while (running);
@@ -252,7 +252,7 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 	double* yLow = new double[arrayLength];
 	double* xHigh = new double[arrayLength];
 	double* yHigh = new double[arrayLength];
-		
+
 	//initial values set to the opposite extremes. To ensure it's accurracy, despite the input.
 	double highestY = -DBL_MAX;
 	double lowestY = DBL_MAX;
@@ -261,7 +261,7 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 
 	for (int i = 0; i < arrayLength; i++){
 
-		//calculates and stores the slope of each vector. 
+		//calculates and stores the slope of each vector.
 		M[i] = Vecs[i].yaxis / Vecs[i].xaxis;
 
 		//gets limmits for each vector
@@ -279,7 +279,7 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 	float step = 2;
 
 	//keeps the display no wider than 70 characters
-	//also returns scalerX to represent how manny units each 
+	//also returns scalerX to represent how manny units each
 	//pixel is worth
 	while (abs(lowestX) + highestX > 70) {
 		highestX /= step;
@@ -289,12 +289,12 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 	}
 
 	//keeps the display no taller than 40 characters
-	//also returns scalerY to represent how manny units each 
+	//also returns scalerY to represent how manny units each
 	//pixel is worth
 	count = 0;
 	while (abs(lowestY) + highestY > 40) {
 		highestY /= step;
-		lowestY /= step;		
+		lowestY /= step;
 		count++;
 		scalerY = pow(step,count);
 	}
@@ -304,7 +304,7 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 	float weightX = .51 * scalerX;
 
 	//display from Lowest to highest to fit all lines
-
+	
 	//Top border and corners
 	cout << "##";
 	for (int j = lowestX - 2; j < highestX + 3; j++) {
@@ -396,14 +396,14 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 					else if (display_Y == 0) {
 						cout << "-";
 					}
-					 
+
 					else if (display_Y % grid == 0 && display_X % grid == 0) {
 						cout << "+";
 					}
 
 					else if(display_X % grid == 0){
 						cout << ".";
-					}					
+					}
 
 					else if (display_Y % grid == 0) {
 						cout << ".";
