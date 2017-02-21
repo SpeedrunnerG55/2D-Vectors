@@ -70,7 +70,7 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]);
 
 //inline functions that make GIANT conditionals easier to read.
 inline bool limitChecker(int x, double xHigh, double xLow, int y, double yHigh, double yLow);
-inline bool cellChecker(float weight, double yValue, int y, double xValue, int x);
+inline bool range_Checker(float weightX, float weightY, double yValue, int y, double xValue, int x);
 
 /* user interface function responsible for all inputs into vector structs. Also prompts user.
 Parameter is to designate the first and second vectors
@@ -84,6 +84,7 @@ int main()
 	char Menu_Select;
 	bool running = true;
 	do {
+		int test = rand() % 100000;
 		cout << "What do you want to do? type:" << endl;
 		cout << "    1 for vector addition." << endl;
 		cout << "    2 for vector subtraction." << endl;
@@ -119,19 +120,20 @@ int main()
 				Alpha = get_Vector("The");
 				Vector_Magnitude(Alpha);
 				break;
+				//Hidden test input
 			case 'T':
 				Alpha.Title = "Alpha";
-				Beta.Title = "Beta";
+				Beta.Title  = "Beta";
 				Delta.Title = "Delta";
 				Gamma.Title = "Gamma";
-				Alpha.xaxis = rand() % 40 - 20;
-				Alpha.yaxis = rand() % 40 - 20;
-				Beta.xaxis = rand() % 40 - 20;
-				Beta.yaxis = rand() % 40 - 20;
-				Delta.xaxis = rand() % 40 - 20;
-				Delta.yaxis = rand() % 40 - 20;
-				Gamma.xaxis = rand() % 40 - 20;
-				Gamma.yaxis = rand() % 40 - 20;
+				Alpha.xaxis = rand() % test - test / 2;
+				Alpha.yaxis = rand() % test - test / 2;
+				Beta.xaxis  = rand() % test - test / 2;
+				Beta.yaxis  = rand() % test - test / 2;
+				Delta.xaxis = rand() % test - test / 2;
+				Delta.yaxis = rand() % test - test / 2;
+				Gamma.xaxis = rand() % test - test / 2;
+				Gamma.yaxis = rand() % test - test / 2;
 				print_Vector(Alpha);
 				print_Vector(Beta);
 				print_Vector(Delta);
@@ -197,12 +199,12 @@ bounds get_Bounds(Vectors V) {
 }
 
 //inline functions that make GIANT conditionals easier to read.
-inline bool limitChecker(int x, int y, bounds B) {
+inline bool limit_Checker(int x, int y, bounds B) {
 	return (x <= B.xHigh && x >= B.xLow && y <= B.yHigh && y >= B.yLow);
 }
 
-inline bool cellChecker(float weight, double yValue, int y, double xValue, int x) {
-	return (yValue > y - weight && yValue < y + weight || xValue > x - weight && xValue < x + weight);
+inline bool range_Checker(float weightX,float weightY, double yValue, int y, double xValue, int x) {
+	return (yValue > y - weightY && yValue < y + weightY || xValue > x - weightX && xValue < x + weightX);
 }
 
 void displayVectorOperation(Vectors v1)
@@ -257,12 +259,6 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 	double highestX = -DBL_MAX;
 	double lowestX = DBL_MAX;
 
-	//line thickness
-	float weight = .6;
-
-	//grid line spacing
-	int grid = 5;
-
 	for (int i = 0; i < arrayLength; i++){
 
 		//calculates and stores the slope of each vector. 
@@ -278,20 +274,51 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 		if (VB[i].xLow < lowestX)lowestX = VB[i].xLow;
 	}
 
+	//grid line spacing
+	int grid = 5, count =0, scalerX = 1, scalerY = 1;
+	float step = 2;
+
+	//keeps the display no wider than 70 characters
+	//also returns scalerX to represent how manny units each 
+	//pixel is worth
+	while (abs(lowestX) + highestX > 70) {
+		highestX /= step;
+		lowestX /= step;
+		count++;
+		scalerX = pow(step, count);
+	}
+
+	//keeps the display no taller than 40 characters
+	//also returns scalerY to represent how manny units each 
+	//pixel is worth
+	count = 0;
+	while (abs(lowestY) + highestY > 40) {
+		highestY /= step;
+		lowestY /= step;		
+		count++;
+		scalerY = pow(step,count);
+	}
+
+	//line thickness
+	float weightY = .51 * scalerY;
+	float weightX = .51 * scalerX;
+
 	//display from Lowest to highest to fit all lines
 
 	//Top border and corners
 	cout << "##";
-	for (int x = lowestX - 2; x < highestX + 3; x++) {
+	for (int j = lowestX - 2; j < highestX + 3; j++) {
 		cout << "=";
 	}
 	cout << "##" << endl;
 
 	//inside
-	for (int y = highestY + 2; y > lowestY - 3; y--) {
+	for (int display_Y = highestY + 2; display_Y > lowestY - 3; display_Y--) {
+		int y = display_Y * scalerY;
 		//left border
 		cout << "||";
-		for (int x = lowestX - 2; x < highestX + 3; x++) {			
+		for (int display_X = lowestX - 2; display_X < highestX + 3; display_X++) {
+			int x = display_X * scalerX;
 
 			/*
 			|=============================================== DISPLAY SUMMARY ===============================================|
@@ -332,7 +359,7 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 			*/
 
 			//display oragin
-			if (y == 0 && x == 0) {
+			if (display_Y == 0 && display_X == 0) {
 				cout << "#";
 			}
 
@@ -343,12 +370,13 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 				bool found = false;
 				for (int i = 0; i < arrayLength && !found; i++)
 				{
-						//Limit checker
-					if (limitChecker(x, y, VB[i])) {
+					//Limit checker
+					if (limit_Checker(x, y, VB[i])) {
 						//gets each vectors x y value for the displays x and y value
 						yValue[i] = M[i] * x;
 						xValue[i] = y / M[i];
-						if (cellChecker(weight, yValue[i], y, xValue[i], x)){
+						//Range checker
+						if (range_Checker(weightX,weightY, yValue[i], y, xValue[i], x)){
 							found = true;
 							//plot marker
 							cout << Vecs[i].Title[0];
@@ -360,24 +388,24 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 				if (!found) {
 
 					//Display Y axis
-					if (x == 0) {
+					if (display_X == 0) {
 						cout << "|";
 					}
 
 					//Display X axis
-					else if (y == 0) {
+					else if (display_Y == 0) {
 						cout << "-";
 					}
 					 
-					else if (y % grid == 0 && x % grid == 0) {
+					else if (display_Y % grid == 0 && display_X % grid == 0) {
 						cout << "+";
 					}
 
-					else if(x % grid == 0){
+					else if(display_X % grid == 0){
 						cout << ".";
 					}					
 
-					else if (y % grid == 0) {
+					else if (display_Y % grid == 0) {
 						cout << ".";
 					}
 
@@ -389,14 +417,14 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 			}
 		}
 		//right border and Y grid marker
-		cout << "|| "; if (y % grid == 0) cout << y << endl;
+		cout << "|| "; if (display_Y % grid == 0) cout << y << endl;
 		else{
 			cout << endl;
 		}
 	}
 	//Bottom border and corners
 	cout << "##";
-	for (int x = lowestX - 2; x < highestX + 3; x++) {
+	for (int displayX = lowestX - 2; displayX < highestX + 3; displayX++) {
 		cout << "=";
 	}
 	cout << "##" << endl;
@@ -404,8 +432,9 @@ void displayVectorOperation(Vectors(&Vecs)[arrayLength]) {
 
 	//X grid markers
 	bool afterfirst = false;
-	for (int x = lowestX - 2; x < highestX + 3; x++) {
-		if (x % grid == 0) {
+	for (int displayX = lowestX - 2; displayX < highestX + 3; displayX++) {
+		int x = displayX * scalerX;
+		if (displayX % grid == 0) {
 			afterfirst = true;
 			cout << setw(grid) << x;
 		}
@@ -481,7 +510,6 @@ void Scalar_Multiplication(Vectors vec1, double k) {
 	//overlap the first vecttor because function must take 3 vectors
 	displayVectorOperation(vec1, mult);
 }
-
 
 void Scalar_Product(Vectors vec1, Vectors vec2) {
 	//input vectors
